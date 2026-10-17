@@ -2,14 +2,14 @@ package helper
 
 import "net"
 
-// IsIPv4Network checks if the given network is an IPv4 network.
-// It returns true if the network is an IPv4 network, otherwise false.
+// IsIPv4Network 判断这个网络是不是 IPv4 网络。
+// 是就返回 true，否则返回 false。
 func IsIPv4Network(network *net.IPNet) bool {
 	return network.IP.To4() != nil
 }
 
-// IsIPv6Network checks if the given network is an IPv6 network.
-// It returns true if the network is an IPv6 network, otherwise false.
+// IsIPv6Network 判断这个网络是不是 IPv6 网络。
+// 是就返回 true，否则返回 false。
 func IsIPv6Network(network *net.IPNet) bool {
 	return network.IP.To16() != nil
 }

@@ -2,7 +2,7 @@ package helper
 
 // FormatNumber 把没有分隔符的数字串加上千分位逗号。
 // 输入 [123456789] -> 输出 [123,456,789]。
-// 这个函数已经写好了，作为「字符串按字节处理」的例子读一读。
+// 实现上是逐个字符写进新切片：每插入一个逗号，后面的字符就要整体右移一位。
 func FormatNumber(s string) string {
 	length := len(s)
 	if length == 0 {

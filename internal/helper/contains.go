@@ -1,8 +1,12 @@
 package helper
 
-// ContainsInt checks if the given slice of integers contains the specified integer.
-// It returns true if the integer is within the slice, otherwise false.
+// ContainsInt 判断整数切片里有没有指定的那个整数。
+// 有就返回 true，没有返回 false。
 func ContainsInt(ints []int, specifiedInt int) bool {
-	// [填空 39] 用 range 遍历 ints，相等就返回 true，循环结束返回 false
+	for _, i := range ints {
+		if i == specifiedInt {
+			return true
+		}
+	}
 	return false
 }

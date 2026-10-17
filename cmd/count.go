@@ -20,44 +20,33 @@ const (
 
 var (
 	countCmd = &cobra.Command{
-		// [填空 3] 把这个子命令描述清楚（注意三个字段各自会出现在哪里）：
-		//   Use:     "count"          // 命令行里输入的名字，会出现在父命令的帮助里
-		//   Short:   "..."            // 一句话说明，同样出现在父命令的帮助里
-		//   Example: countExample     // 用上面已经写好的常量，会出现在 `cidr count -h` 里
+		Use:     "count",
+		Short:   "Return the count of all addresses in a given CIDR range",
+		Example: countExample,
 		Run: func(cmd *cobra.Command, args []string) {
-			// [填空 4] 参数校验：必须刚好 1 个参数（一个 CIDR），不是就报错退出：
-			//   fmt.Println("error: provide a CIDR range")
-			//   fmt.Println("See 'cidr count -h' for help and examples")
-			//   os.Exit(1)
-			if len(args) == 0 {
-				// TODO: 占位代码，完成填空 4 之后把它删掉
-				fmt.Println("error: 还没有做参数校验（填空 4）")
+			if len(args) != 1 {
+				fmt.Println("error: provide a CIDR range")
+				fmt.Println("See 'cidr count -h' for help and examples")
 				os.Exit(1)
 			}
-
-			// [填空 5] 用 core.ParseCIDR 解析用户输入的网段（现在是写死的字符串）：
-			//   network, err := core.ParseCIDR(args[0])
-			//   出错时打印 "error: invalid CIDR range: <用户输入>" 和帮助提示，然后 os.Exit(1)
-			network, err := core.ParseCIDR("0.0.0.0/0") // TODO: 改成 args[0]（填空 5）
+			network, err := core.ParseCIDR(args[0])
 			if err != nil {
-				fmt.Println(err)
+				fmt.Printf("error: invalid CIDR range: %s\n", args[0])
+				fmt.Println("See 'cidr count -h' for help and examples")
 				os.Exit(1)
 			}
-
-			// [填空 6] 把地址总数打印出来：fmt.Println(count(network))
-			_ = count(network) // TODO: 改成把它打印出来（填空 6）
+			hostAddressCount := count(network)
+			fmt.Println(hostAddressCount)
 		},
 	}
 )
 
 func init() {
-	// [填空 7] 把 countCmd 挂到根命令下，`cidr count ...` 才会生效：
-	//   rootCmd.AddCommand(countCmd)
+	rootCmd.AddCommand(countCmd)
 }
 
-// count 是 cmd 层到 core 层的一层薄封装。
-// cmd 层只负责“解析命令行 + 打印”，具体算法都放在 internal/core 里。
+// count 返回网络里的地址总数（cmd 层到 core 层的一层薄封装）。
 func count(network *net.IPNet) *big.Int {
-	// [填空 8] 提示：调用 core.GetAddressCount(network)
-	return big.NewInt(0)
+	count := core.GetAddressCount(network)
+	return count
 }
